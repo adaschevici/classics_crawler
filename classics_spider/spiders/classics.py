@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from scrapy.selector import Selector
+from scrapy.http import Request
+from scrapy.loader import ItemLoader
+
 from classics_spider.spiders.base import ForumThreadSpider
 from classics_spider.items import ClassicsSpiderItem
 from classics_spider.utils import Sanitizer
-
-from scrapy.selector import Selector
-from scrapy.http import Request
 
 class XPATHS:
 
@@ -38,16 +39,12 @@ class ClassicsSpider(ForumThreadSpider):
         next = dom.xpath(XPATHS.NEXT_PAGE)
         posts = dom.xpath(XPATHS.POSTS_LIST)
         for post in posts:
-            post_id = post.xpath(XPATHS.POST_ID).extract()
-            post_author = Sanitizer.trim(post.xpath(XPATHS.POST_AUTHOR).extract()[0])
-            post_datetime = Sanitizer.extract_date(Sanitizer.trim(post.xpath(XPATHS.POST_DATETIME).extract()[0]))
-            post_content = Sanitizer.extract_content(Sanitizer.trim(post.xpath(XPATHS.POST_CONTENT).extract()[0]))
-            yield ClassicsSpiderItem(
-                post_id=post_id,
-                post_author=post_author,
-                post_datetime=post_datetime,
-                post_content=post_content
-            )
+            loader = ItemLoader(item=ClassicsSpiderItem(), selector=post)
+            loader.add_xpath('post_id', XPATHS.POST_ID)
+            loader.add_xpath('post_author', XPATHS.POST_AUTHOR)
+            loader.add_xpath('post_datetime', XPATHS.POST_DATETIME)
+            loader.add_xpath('post_content', XPATHS.POST_CONTENT)
+            yield loader.load_item()
         if next:
             next_page_url = ClassicsSpider.URL % next.extract()[0]
             print(next_page_url)
