@@ -11,14 +11,6 @@ from scrapy.exporters import CsvItemExporter
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 
-class XPATHS:
-
-    NEXT_PAGE = ""
-    POST_ID = ""
-    POST_AUTHOR = ""
-    POST_DATETIME = ""
-    POST_CONTENT = ""
-
 class ClassicsSpiderPipeline(object):
 
     def __init__(self):
@@ -34,7 +26,7 @@ class ClassicsSpiderPipeline(object):
     def spider_opened(self, spider):
         item_file = open('%s.csv' % spider.output_file, 'w+b')
         self.files[spider] = item_file
-        self.exporter = CsvItemExporter(item_file, delimiter=",")
+        self.exporter = CsvItemExporter(item_file, delimiter="|")
         self.exporter.fields_to_export = ["post_id", "post_author", "post_datetime", "post_content"]
         self.exporter.start_exporting()
 
