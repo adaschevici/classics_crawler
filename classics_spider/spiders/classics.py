@@ -18,7 +18,7 @@ class XPATHS:
 
 class ClassicsSpider(ForumThreadSpider):
     URL = "http://www.oldclassiccar.co.uk/forum/phpbb/phpBB2/%s"
-    name = "classics"
+    name = "classic_cars"
     allowed_domains = ["oldclassiccar.co.uk"]
     start_urls = ['http://www.oldclassiccar.co.uk/forum/phpbb/phpBB2/viewtopic.php?t=12591']
 
