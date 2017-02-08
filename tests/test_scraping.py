@@ -1,7 +1,9 @@
 import re
+from time import strptime
+from datetime import datetime
+
 import requests
 import sys
-
 from scrapy.http import HtmlResponse, Request
 sys.path.append("../classics_spider")
 
@@ -35,7 +37,10 @@ class ClassicsSpiderTest(unittest.TestCase):
         self.assertIsNotNone(re.match(r'[A-Za-z0-9_]+', post_author))
 
     def _test_post_datetime(self, post_datetime):
-        self.assertIsNotNone(re.match(r'[A-Za-z0-9_]+', post_datetime))
+        # Mon Sep 24, 2012 9:04 pm
+        time_regex = "(Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{1,2}, [0-9]{4} [0-9:]{4,5} (am|pm)"
+        post_time = re.match(time_regex, post_datetime)
+        self.assertIsNotNone(re.match(time_regex, post_datetime))
 
     def _test_item_results(self, results, expected_length):
         count = 0
