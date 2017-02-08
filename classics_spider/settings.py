@@ -14,7 +14,6 @@ BOT_NAME = 'classics_spider'
 SPIDER_MODULES = ['classics_spider.spiders']
 NEWSPIDER_MODULE = 'classics_spider.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:51.0) Gecko/20100101 Firefox/51.0" # 'classics_spider (+http://www.yourdomain.com)'
 

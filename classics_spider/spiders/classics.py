@@ -47,7 +47,6 @@ class ClassicsSpider(ForumThreadSpider):
             yield loader.load_item()
         if next:
             next_page_url = ClassicsSpider.URL % next.extract()[0]
-            print(next_page_url)
             yield Request(
                 url=next_page_url,
                 callback=self.parse
