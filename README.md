@@ -29,6 +29,6 @@ To run the crawler:
 scrapy crawl classic_cars [-a output_file=<file_name>]
 ```
 
-file_name does not need the csv extension as it already gets it. 
+file_name does not need the csv extension as it already has it appended in the code. 
 
 If the filename is missing the created file will be classic_cars.csv
