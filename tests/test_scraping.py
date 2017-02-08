@@ -1,5 +1,7 @@
+import re
 import requests
 import sys
+
 from scrapy.http import HtmlResponse, Request
 sys.path.append("../classics_spider")
 
@@ -26,15 +28,26 @@ class ClassicsSpiderTest(unittest.TestCase):
     def setUp(self):
         self.spider = classics.ClassicsSpider()
 
+    def _test_post_id(self, post_id):
+        self.assertIsNotNone(re.match(r'[0-9]{5,9}', post_id))
+
+    def _test_post_author(self, post_author):
+        self.assertIsNotNone(re.match(r'[A-Za-z0-9_]+', post_author))
+
+    def _test_post_datetime(self, post_datetime):
+        self.assertIsNotNone(re.match(r'[A-Za-z0-9_]+', post_datetime))
+
     def _test_item_results(self, results, expected_length):
         count = 0
-        permalinks = set()
         for item in results:
             try:
                 self.assertIsNotNone(item['post_id'])
+                self._test_post_id(item['post_id'])
                 self.assertIsNotNone(item['post_author'])
+                self._test_post_author(item['post_author'])
                 self.assertIsNotNone(item['post_content'])
                 self.assertIsNotNone(item['post_datetime'])
+                self._test_post_datetime(item['post_datetime'])
                 count += 1
             except TypeError:
                 print("This means the next page is being opened")
