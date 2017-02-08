@@ -16,3 +16,19 @@ Unittests are written using the standard unittest library + requests
 The idea is to deploy the spider onto a scrapyd server, however scrapyd and scrapyd-client
 
 is not yet compatible with python 3.6 and needs to be ported to 3.6
+
+To run the unittests :
+
+```
+python tests/test_scraper.py
+```
+
+To run the crawler:
+
+```
+scrapy crawl classic_cars [-a output_file=<file_name>]
+```
+
+file_name does not need the csv extension as it already gets it. 
+
+If the filename is missing the created file will be classic_cars.csv
